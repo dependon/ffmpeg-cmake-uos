@@ -1,0 +1,1 @@
+config:c:x86_64:generic:linux:gcc 8 (Uos 8.3.0.5-1+dde):--extra-libs=-lpthread --extra-libs=-lm --enable-gpl --enable-libx264 --enable-nonfree --disable-asm
