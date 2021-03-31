@@ -6,7 +6,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -fomit-frame-pointer -pthread ")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wdeclaration-after-statement -Wall -Wdisabled-optimization -Wpointer-arith -Wredundant-decls -Wwrite-strings -Wtype-limits -Wundef -Wmissing-prototypes -Wno-pointer-to-int-cast -Wstrict-prototypes -Wempty-body -Wno-parentheses -Wno-switch -Wno-format-zero-length -Wno-pointer-sign -O3 -fno-math-errno -fno-signed-zeros -fno-tree-vectorize -Werror=format-security -Werror=implicit-function-declaration -Werror=missing-prototypes -Werror=return-type -Werror=vla -Wformat -Wno-maybe-uninitialized")
 message("c flags:\n"  ${CMAKE_C_FLAGS})
-#寻找第三方库，比如SDL
 find_package(PkgConfig REQUIRED)
 find_package(SDL2 REQUIRED)
 
@@ -24,8 +23,341 @@ include_directories(
     ./
     ./compat/atomics/gcc
     )
-#里面每个list填写各个库需要的文件
+
 list(APPEND avfilter_srcs
+    #add
+    #    libavfilter/yadif_common.c
+    #    libavfilter/scene_sad.c
+    #    libavfilter/scale_eval.c
+    #    libavfilter/x86/avf_showcqt_init.c
+    #    libavfilter/x86/vf_atadenoise_init.c
+    #    libavfilter/x86/vf_blend_init.c
+    #    libavfilter/x86/vf_bwdif_init.c
+    #    libavfilter/x86/vf_convolution_init.c
+    #    libavfilter/x86/vf_framerate_init.c
+    #    libavfilter/x86/vf_gblur_init.c
+    #    libavfilter/x86/vf_idet_init.c
+    #    libavfilter/x86/vf_limiter_init.c
+    #    libavfilter/x86/vf_maskedclamp_init.c
+    #    libavfilter/x86/vf_maskedmerge_init.c
+    #    libavfilter/x86/vf_noise.c
+    #    libavfilter/x86/vf_overlay_init.c
+    #    libavfilter/x86/vf_gradfun_init.c
+    #    libavfilter/x86/vf_psnr_init.c
+    #    libavfilter/x86/vf_ssim_init.c
+    #    libavfilter/x86/vf_threshold_init.c
+    #    libavfilter/x86/vf_w3fdif_init.c
+    #    libavfilter/x86/vf_yadif_init.c
+
+    #    #yuanlai
+    #    libavfilter/aeval.c
+    #    libavfilter/af_acontrast.c
+    #    libavfilter/af_acopy.c
+    #    libavfilter/af_acrossover.c
+    #    libavfilter/af_acrusher.c
+    #    libavfilter/af_adeclick.c
+    #    libavfilter/af_adelay.c
+    #    libavfilter/af_aderivative.c
+    #    libavfilter/af_aecho.c
+    #    libavfilter/af_aemphasis.c
+    #    libavfilter/af_afade.c
+    #    libavfilter/af_afftdn.c
+    #    libavfilter/af_afftfilt.c
+    #    libavfilter/af_afir.c
+    #    libavfilter/af_aformat.c
+    #    libavfilter/af_agate.c
+    #    libavfilter/af_aiir.c
+    #    libavfilter/af_alimiter.c
+    #    libavfilter/af_amerge.c
+    #    libavfilter/af_amix.c
+    #    libavfilter/af_amultiply.c
+    #    libavfilter/af_anequalizer.c
+    #    libavfilter/af_anull.c
+    #    libavfilter/af_apad.c
+    #    libavfilter/af_aphaser.c
+    #    libavfilter/af_apulsator.c
+    #    libavfilter/af_aresample.c
+    #    libavfilter/af_asetnsamples.c
+    #    libavfilter/af_asetrate.c
+    #    libavfilter/af_ashowinfo.c
+    #    libavfilter/af_astats.c
+    #    libavfilter/af_atempo.c
+    #    libavfilter/af_biquads.c
+    #    libavfilter/af_channelmap.c
+    #    libavfilter/af_channelsplit.c
+    #    libavfilter/af_chorus.c
+    #    libavfilter/af_compand.c
+    #    libavfilter/af_compensationdelay.c
+    #    libavfilter/af_crossfeed.c
+    #    libavfilter/af_crystalizer.c
+    #    libavfilter/af_dcshift.c
+    #    libavfilter/af_drmeter.c
+    #    libavfilter/af_dynaudnorm.c
+    #    libavfilter/af_earwax.c
+    #    libavfilter/af_extrastereo.c
+    #    libavfilter/af_firequalizer.c
+    #    libavfilter/af_flanger.c
+    #    libavfilter/af_haas.c
+    #    libavfilter/af_hdcd.c
+    #    libavfilter/af_headphone.c
+    #    libavfilter/af_join.c
+    #    libavfilter/af_loudnorm.c
+    #    libavfilter/af_mcompand.c
+    #    libavfilter/af_pan.c
+    #    libavfilter/af_replaygain.c
+    #    libavfilter/af_sidechaincompress.c
+    #    libavfilter/af_silencedetect.c
+    #    libavfilter/af_silenceremove.c
+    #    libavfilter/af_stereotools.c
+    #    libavfilter/af_stereowiden.c
+    #    libavfilter/af_superequalizer.c
+    #    libavfilter/af_surround.c
+    #    libavfilter/af_tremolo.c
+    #    libavfilter/af_vibrato.c
+    #    libavfilter/af_volume.c
+    #    libavfilter/af_volumedetect.c
+    #    libavfilter/allfilters.c
+    #    libavfilter/asink_anullsink.c
+    #    libavfilter/asrc_anoisesrc.c
+    #    libavfilter/asrc_anullsrc.c
+    #    libavfilter/asrc_hilbert.c
+    #    libavfilter/asrc_sinc.c
+    #    libavfilter/asrc_sine.c
+    #    libavfilter/audio.c
+    #    libavfilter/avf_abitscope.c
+    #    libavfilter/avf_ahistogram.c
+    #    libavfilter/avf_aphasemeter.c
+    #    libavfilter/avf_avectorscope.c
+    #    libavfilter/avf_concat.c
+    #    libavfilter/avf_showcqt.c
+    #    libavfilter/avf_showfreqs.c
+    #    libavfilter/avf_showspectrum.c
+    #    libavfilter/avf_showvolume.c
+    #    libavfilter/avf_showwaves.c
+    #    libavfilter/avfilter.c
+    #    libavfilter/avfiltergraph.c
+    #    libavfilter/bbox.c
+    #    libavfilter/boxblur.c
+    #    libavfilter/buffersink.c
+    #    libavfilter/buffersrc.c
+    #    libavfilter/colorspace.c
+    #    libavfilter/colorspacedsp.c
+    #    libavfilter/dnn/dnn_backend_native.c
+    #    libavfilter/dnn/dnn_interface.c
+    #    libavfilter/drawutils.c
+    #    libavfilter/ebur128.c
+    #    libavfilter/f_bench.c
+    #    libavfilter/f_cue.c
+    #    libavfilter/f_drawgraph.c
+    #    libavfilter/f_ebur128.c
+    #    libavfilter/f_graphmonitor.c
+    #    libavfilter/f_interleave.c
+    #    libavfilter/f_loop.c
+    #    libavfilter/f_metadata.c
+    #    libavfilter/f_perms.c
+    #    libavfilter/f_realtime.c
+    #    libavfilter/f_reverse.c
+    #    libavfilter/f_select.c
+    #    libavfilter/f_sendcmd.c
+    #    libavfilter/f_sidedata.c
+    #    libavfilter/f_streamselect.c
+    #    libavfilter/fifo.c
+    #    libavfilter/formats.c
+    #    libavfilter/framepool.c
+    #    libavfilter/framequeue.c
+    #    libavfilter/framesync.c
+    #    libavfilter/generate_wave_table.c
+    #    libavfilter/graphdump.c
+    #    libavfilter/graphparser.c
+    #    libavfilter/lavfutils.c
+    #    libavfilter/lswsutils.c
+    #    libavfilter/motion_estimation.c
+    #    libavfilter/pthread.c
+    ##    libavfilter/scale.c
+    #    libavfilter/setpts.c
+    #    libavfilter/settb.c
+    #    libavfilter/split.c
+    #    libavfilter/src_movie.c
+    #    libavfilter/transform.c
+    #    libavfilter/trim.c
+    #    libavfilter/vaf_spectrumsynth.c
+    #    libavfilter/vf_alphamerge.c
+    #    libavfilter/vf_amplify.c
+    #    libavfilter/vf_aspect.c
+    #    libavfilter/vf_atadenoise.c
+    #    libavfilter/vf_avgblur.c
+    #    libavfilter/vf_bbox.c
+    #    libavfilter/vf_bitplanenoise.c
+    #    libavfilter/vf_blackdetect.c
+    #    libavfilter/vf_blackframe.c
+    #    libavfilter/vf_blend.c
+    #    libavfilter/vf_bm3d.c
+    #    libavfilter/vf_boxblur.c
+    #    libavfilter/vf_bwdif.c
+    #    libavfilter/vf_chromakey.c
+    #    libavfilter/vf_ciescope.c
+    #    libavfilter/vf_codecview.c
+    #    libavfilter/vf_colorbalance.c
+    #    libavfilter/vf_colorchannelmixer.c
+    #    libavfilter/vf_colorconstancy.c
+    #    libavfilter/vf_colorkey.c
+    #    libavfilter/vf_colorlevels.c
+    #    libavfilter/vf_colormatrix.c
+    #    libavfilter/vf_colorspace.c
+    #    libavfilter/vf_convolution.c
+    #    libavfilter/vf_convolve.c
+    #    libavfilter/vf_copy.c
+    #    libavfilter/vf_cover_rect.c
+    #    libavfilter/vf_crop.c
+    #    libavfilter/vf_cropdetect.c
+    #    libavfilter/vf_curves.c
+    #    libavfilter/vf_datascope.c
+    #    libavfilter/vf_dctdnoiz.c
+    #    libavfilter/vf_deband.c
+    #    libavfilter/vf_deblock.c
+    #    libavfilter/vf_decimate.c
+    #    libavfilter/vf_deflicker.c
+    #    libavfilter/vf_dejudder.c
+    #    libavfilter/vf_delogo.c
+    #    libavfilter/vf_deshake.c
+    #    libavfilter/vf_despill.c
+    #    libavfilter/vf_detelecine.c
+    #    libavfilter/vf_displace.c
+    #    libavfilter/vf_drawbox.c
+    #    libavfilter/vf_edgedetect.c
+    #    libavfilter/vf_elbg.c
+    #    libavfilter/vf_entropy.c
+    #    libavfilter/vf_eq.c
+    #    libavfilter/vf_extractplanes.c
+    #    libavfilter/vf_fade.c
+    #    libavfilter/vf_fftdnoiz.c
+    #    libavfilter/vf_fftfilt.c
+    #    libavfilter/vf_field.c
+    #    libavfilter/vf_fieldhint.c
+    #    libavfilter/vf_fieldmatch.c
+    #    libavfilter/vf_fieldorder.c
+    #    libavfilter/vf_fillborders.c
+    #    libavfilter/vf_find_rect.c
+    #    libavfilter/vf_floodfill.c
+    #    libavfilter/vf_format.c
+    #    libavfilter/vf_fps.c
+    #    libavfilter/vf_framepack.c
+    #    libavfilter/vf_framerate.c
+    #    libavfilter/vf_framestep.c
+    #    libavfilter/vf_fspp.c
+    #    libavfilter/vf_gblur.c
+    #    libavfilter/vf_geq.c
+    #    libavfilter/vf_gradfun.c
+    #    libavfilter/vf_hflip.c
+    #    libavfilter/vf_histeq.c
+    #    libavfilter/vf_histogram.c
+    #    libavfilter/vf_hqdn3d.c
+    #    libavfilter/vf_hqx.c
+    #    libavfilter/vf_hue.c
+    #    libavfilter/vf_hwdownload.c
+    #    libavfilter/vf_hwmap.c
+    #    libavfilter/vf_hwupload.c
+    #    libavfilter/vf_hysteresis.c
+    #    libavfilter/vf_idet.c
+    #    libavfilter/vf_il.c
+    #    libavfilter/vf_kerndeint.c
+    #    libavfilter/vf_lenscorrection.c
+    #    libavfilter/vf_limiter.c
+    #    libavfilter/vf_lumakey.c
+    #    libavfilter/vf_lut.c
+    #    libavfilter/vf_lut2.c
+    #    libavfilter/vf_lut3d.c
+    #    libavfilter/vf_maskedclamp.c
+    #    libavfilter/vf_maskedmerge.c
+    #    libavfilter/vf_mcdeint.c
+    #    libavfilter/vf_mergeplanes.c
+    #    libavfilter/vf_mestimate.c
+    #    libavfilter/vf_midequalizer.c
+    #    libavfilter/vf_minterpolate.c
+    #    libavfilter/vf_mix.c
+    #    libavfilter/vf_mpdecimate.c
+    #    libavfilter/vf_neighbor.c
+    #    libavfilter/vf_nlmeans.c
+    #    libavfilter/vf_nnedi.c
+    #    libavfilter/vf_noise.c
+    #    libavfilter/vf_normalize.c
+    #    libavfilter/vf_null.c
+    #    libavfilter/vf_overlay.c
+    #    libavfilter/vf_owdenoise.c
+    #    libavfilter/vf_pad.c
+    #    libavfilter/vf_palettegen.c
+    #    libavfilter/vf_paletteuse.c
+    #    libavfilter/vf_perspective.c
+    #    libavfilter/vf_phase.c
+    #    libavfilter/vf_pixdesctest.c
+    #    libavfilter/vf_pp.c
+    #    libavfilter/vf_pp7.c
+    #    libavfilter/vf_premultiply.c
+    #    libavfilter/vf_pseudocolor.c
+    #    libavfilter/vf_psnr.c
+    #    libavfilter/vf_pullup.c
+    #    libavfilter/vf_qp.c
+    #    libavfilter/vf_random.c
+    #    libavfilter/vf_readeia608.c
+    #    libavfilter/vf_readvitc.c
+    #    libavfilter/vf_remap.c
+    #    libavfilter/vf_removegrain.c
+    #    libavfilter/vf_removelogo.c
+    #    libavfilter/vf_repeatfields.c
+    #    libavfilter/vf_rotate.c
+    #    libavfilter/vf_sab.c
+    #    libavfilter/vf_scale.c
+    #    libavfilter/vf_selectivecolor.c
+    #    libavfilter/vf_separatefields.c
+    #    libavfilter/vf_setparams.c
+    #    libavfilter/vf_showinfo.c
+    #    libavfilter/vf_showpalette.c
+    #    libavfilter/vf_shuffleframes.c
+    #    libavfilter/vf_shuffleplanes.c
+    #    libavfilter/vf_signalstats.c
+    #    libavfilter/vf_signature.c
+    #    libavfilter/vf_smartblur.c
+    #    libavfilter/vf_spp.c
+    #    libavfilter/vf_sr.c
+    #    libavfilter/vf_ssim.c
+    #    libavfilter/vf_stack.c
+    #    libavfilter/vf_stereo3d.c
+    #    libavfilter/vf_super2xsai.c
+    #    libavfilter/vf_swaprect.c
+    #    libavfilter/vf_swapuv.c
+    #    libavfilter/vf_telecine.c
+    #    libavfilter/vf_threshold.c
+    #    libavfilter/vf_thumbnail.c
+    #    libavfilter/vf_tile.c
+    #    libavfilter/vf_tinterlace.c
+    #    libavfilter/vf_tonemap.c
+    #    libavfilter/vf_transpose.c
+    #    libavfilter/vf_unsharp.c
+    #    libavfilter/vf_uspp.c
+    #    libavfilter/vf_vaguedenoiser.c
+    #    libavfilter/vf_vectorscope.c
+    #    libavfilter/vf_vflip.c
+    #    libavfilter/vf_vfrdet.c
+    #    libavfilter/vf_vibrance.c
+    #    libavfilter/vf_vignette.c
+    #    libavfilter/vf_vmafmotion.c
+    #    libavfilter/vf_w3fdif.c
+    #    libavfilter/vf_waveform.c
+    #    libavfilter/vf_weave.c
+    #    libavfilter/vf_xbr.c
+    #    libavfilter/vf_yadif.c
+    #    libavfilter/vf_zoompan.c
+    #    libavfilter/video.c
+    #    libavfilter/vsink_nullsink.c
+    #    libavfilter/vsrc_cellauto.c
+    #    libavfilter/vsrc_life.c
+    #    libavfilter/vsrc_mandelbrot.c
+    #    libavfilter/vsrc_mptestsrc.c
+    #    libavfilter/vsrc_testsrc.c
+
+
+
+
     libavfilter/aeval.c
     libavfilter/af_acontrast.c
     libavfilter/af_acopy.c
@@ -85,8 +417,8 @@ list(APPEND avfilter_srcs
     libavfilter/af_flanger.c
     libavfilter/af_haas.c
     libavfilter/af_hdcd.c
-    libavfilter/af_headphone.c
     libavfilter/af_join.c
+    libavfilter/af_headphone.c
     libavfilter/af_loudnorm.c
     libavfilter/af_mcompand.c
     libavfilter/af_pan.c
@@ -126,7 +458,6 @@ list(APPEND avfilter_srcs
     libavfilter/avfilter.c
     libavfilter/avfiltergraph.c
     libavfilter/bbox.c
-    libavfilter/boxblur.c
     libavfilter/buffersink.c
     libavfilter/buffersrc.c
     libavfilter/colorspace.c
@@ -195,10 +526,8 @@ list(APPEND avfilter_srcs
     libavfilter/vf_bilateral.c
     libavfilter/vf_bitplanenoise.c
     libavfilter/vf_blackdetect.c
-    libavfilter/vf_blackframe.c
     libavfilter/vf_blend.c
     libavfilter/vf_bm3d.c
-    libavfilter/vf_boxblur.c
     libavfilter/vf_bwdif.c
     libavfilter/vf_cas.c
     libavfilter/vf_chromakey.c
@@ -211,14 +540,11 @@ list(APPEND avfilter_srcs
     libavfilter/vf_colorconstancy.c
     libavfilter/vf_colorkey.c
     libavfilter/vf_colorlevels.c
-    libavfilter/vf_colormatrix.c
     libavfilter/vf_colorspace.c
     libavfilter/vf_convolution.c
     libavfilter/vf_convolve.c
     libavfilter/vf_copy.c
-    libavfilter/vf_cover_rect.c
     libavfilter/vf_crop.c
-    libavfilter/vf_cropdetect.c
     libavfilter/vf_curves.c
     libavfilter/vf_datascope.c
     libavfilter/vf_dblur.c
@@ -230,7 +556,6 @@ list(APPEND avfilter_srcs
     libavfilter/vf_deflicker.c
     libavfilter/vf_deinterlace_vaapi.c
     libavfilter/vf_dejudder.c
-    libavfilter/vf_delogo.c
     libavfilter/vf_derain.c
     libavfilter/vf_deshake.c
     libavfilter/vf_despill.c
@@ -241,7 +566,6 @@ list(APPEND avfilter_srcs
     libavfilter/vf_edgedetect.c
     libavfilter/vf_elbg.c
     libavfilter/vf_entropy.c
-    libavfilter/vf_eq.c
     libavfilter/vf_extractplanes.c
     libavfilter/vf_fade.c
     libavfilter/vf_fftdnoiz.c
@@ -251,7 +575,6 @@ list(APPEND avfilter_srcs
     libavfilter/vf_fieldmatch.c
     libavfilter/vf_fieldorder.c
     libavfilter/vf_fillborders.c
-    libavfilter/vf_find_rect.c
     libavfilter/vf_floodfill.c
     libavfilter/vf_format.c
     libavfilter/vf_fps.c
@@ -260,14 +583,11 @@ list(APPEND avfilter_srcs
     libavfilter/vf_framestep.c
     libavfilter/vf_freezedetect.c
     libavfilter/vf_freezeframes.c
-    libavfilter/vf_fspp.c
     libavfilter/vf_gblur.c
     libavfilter/vf_geq.c
     libavfilter/vf_gradfun.c
     libavfilter/vf_hflip.c
-    libavfilter/vf_histeq.c
     libavfilter/vf_histogram.c
-    libavfilter/vf_hqdn3d.c
     libavfilter/vf_hqx.c
     libavfilter/vf_hue.c
     libavfilter/vf_hwdownload.c
@@ -276,7 +596,6 @@ list(APPEND avfilter_srcs
     libavfilter/vf_hysteresis.c
     libavfilter/vf_idet.c
     libavfilter/vf_il.c
-    libavfilter/vf_kerndeint.c
     libavfilter/vf_lagfun.c
     libavfilter/vf_lenscorrection.c
     libavfilter/vf_limiter.c
@@ -289,7 +608,6 @@ list(APPEND avfilter_srcs
     libavfilter/vf_maskedminmax.c
     libavfilter/vf_maskedthreshold.c
     libavfilter/vf_maskfun.c
-    libavfilter/vf_mcdeint.c
     libavfilter/vf_median.c
     libavfilter/vf_mergeplanes.c
     libavfilter/vf_mestimate.c
@@ -297,29 +615,21 @@ list(APPEND avfilter_srcs
     libavfilter/vf_minterpolate.c
     libavfilter/vf_misc_vaapi.c
     libavfilter/vf_mix.c
-    libavfilter/vf_mpdecimate.c
     libavfilter/vf_neighbor.c
     libavfilter/vf_nlmeans.c
-    libavfilter/vf_nnedi.c
     libavfilter/vf_noise.c
     libavfilter/vf_normalize.c
     libavfilter/vf_null.c
     libavfilter/vf_overlay.c
-    libavfilter/vf_owdenoise.c
     libavfilter/vf_pad.c
     libavfilter/vf_palettegen.c
     libavfilter/vf_paletteuse.c
-    libavfilter/vf_perspective.c
-    libavfilter/vf_phase.c
     libavfilter/vf_photosensitivity.c
     libavfilter/vf_pixdesctest.c
-    libavfilter/vf_pp.c
-    libavfilter/vf_pp7.c
     libavfilter/vf_premultiply.c
     libavfilter/vf_procamp_vaapi.c
     libavfilter/vf_pseudocolor.c
     libavfilter/vf_psnr.c
-    libavfilter/vf_pullup.c
     libavfilter/vf_qp.c
     libavfilter/vf_random.c
     libavfilter/vf_readeia608.c
@@ -327,9 +637,7 @@ list(APPEND avfilter_srcs
     libavfilter/vf_remap.c
     libavfilter/vf_removegrain.c
     libavfilter/vf_removelogo.c
-    libavfilter/vf_repeatfields.c
     libavfilter/vf_rotate.c
-    libavfilter/vf_sab.c
     libavfilter/vf_scale.c
     libavfilter/vf_scale_vaapi.c
     libavfilter/vf_scdet.c
@@ -343,21 +651,15 @@ list(APPEND avfilter_srcs
     libavfilter/vf_shufflepixels.c
     libavfilter/vf_shuffleplanes.c
     libavfilter/vf_signalstats.c
-    libavfilter/vf_signature.c
-    libavfilter/vf_smartblur.c
-    libavfilter/vf_spp.c
     libavfilter/vf_sr.c
     libavfilter/vf_ssim.c
     libavfilter/vf_stack.c
-    libavfilter/vf_stereo3d.c
-    libavfilter/vf_super2xsai.c
     libavfilter/vf_swaprect.c
     libavfilter/vf_swapuv.c
     libavfilter/vf_telecine.c
     libavfilter/vf_threshold.c
     libavfilter/vf_thumbnail.c
     libavfilter/vf_tile.c
-    libavfilter/vf_tinterlace.c
     libavfilter/vf_tmidequalizer.c
     libavfilter/vf_tonemap.c
     libavfilter/vf_tonemap_vaapi.c
@@ -366,9 +668,7 @@ list(APPEND avfilter_srcs
     libavfilter/vf_transpose_vaapi.c
     libavfilter/vf_unsharp.c
     libavfilter/vf_untile.c
-    libavfilter/vf_uspp.c
     libavfilter/vf_v360.c
-    libavfilter/vf_vaguedenoiser.c
     libavfilter/vf_vectorscope.c
     libavfilter/vf_vflip.c
     libavfilter/vf_vfrdet.c
@@ -390,13 +690,556 @@ list(APPEND avfilter_srcs
     libavfilter/vsrc_gradients.c
     libavfilter/vsrc_life.c
     libavfilter/vsrc_mandelbrot.c
-    libavfilter/vsrc_mptestsrc.c
     libavfilter/vsrc_sierpinski.c
     libavfilter/vsrc_testsrc.c
+    #    libavfilter/x86/af_afir_init.c
+    #    #    libavfilter/x86/af_anlmdn.c
+    #    libavfilter/x86/af_anlmdn_init.c
+    #    #    libavfilter/x86/af_volume.c
+    #    libavfilter/x86/af_volume_init.c
+    #    #    libavfilter/x86/avf_showcqt.c
+    #    libavfilter/x86/avf_showcqt_init.c
+    #    #    libavfilter/x86/colorspacedsp.c
+    #    libavfilter/x86/colorspacedsp_init.c
+    #    #    libavfilter/x86/scene_sad.c
+    #    libavfilter/x86/scene_sad_init.c
+    #    #    libavfilter/x86/af_volume.c
+    #    #    libavfilter/x86/af_anlmdn.c
+    #    #    libavfilter/x86/vf_atadenoise.c
+    #    libavfilter/x86/vf_atadenoise_init.c
+    #    #    libavfilter/x86/af_afir.c
+    #    #    libavfilter/x86/vf_blend.c
+    #    libavfilter/x86/vf_blend_init.c
+    #    #    libavfilter/x86/vf_bwdif.c
+    #    libavfilter/x86/vf_bwdif_init.c
+    #    #    libavfilter/x86/scene_sad.c
+    #    #    libavfilter/x86/vf_convolution.c
+    #    libavfilter/x86/vf_convolution_init.c
+    #    #    libavfilter/x86/vf_framerate.c
+    #    libavfilter/x86/vf_framerate_init.c
+    #    #    libavfilter/x86/vf_atadenoise.c
+    #    #    libavfilter/x86/vf_gblur.c
+    #    libavfilter/x86/vf_gblur_init.c
+    #    #    libavfilter/x86/vf_gradfun.c
+    #    libavfilter/x86/vf_gradfun_init.c
+    #    #    libavfilter/x86/vf_convolution.c
+    #    #    libavfilter/x86/vf_hflip.c
+    #    #    libavfilter/x86/avf_showcqt.c
+    #    libavfilter/x86/vf_hflip_init.c
+    #    #    libavfilter/x86/vf_framerate.c
+    #    #    libavfilter/x86/vf_idet.c
+    #    libavfilter/x86/vf_idet_init.c
+    #    #    libavfilter/x86/vf_gblur.c
+    #    #    libavfilter/x86/vf_limiter.c
+    #    libavfilter/x86/vf_limiter_init.c
+    #    #    libavfilter/x86/vf_maskedclamp.c
+    #    #    libavfilter/x86/vf_gradfun.c
+    #    libavfilter/x86/vf_maskedclamp_init.c
+    #    #    libavfilter/x86/vf_maskedmerge.c
+    #    #    libavfilter/x86/vf_hflip.c
+    #    libavfilter/x86/vf_maskedmerge_init.c
+    #    #    libavfilter/x86/vf_idet.c
+    #    libavfilter/x86/vf_noise.c
+    #    #    libavfilter/x86/vf_overlay.c
+    #    libavfilter/x86/vf_overlay_init.c
+    #    #    libavfilter/x86/vf_maskedclamp.c
+    #    #    libavfilter/x86/vf_psnr.c
+    #    #    libavfilter/x86/vf_limiter.c
+    #    libavfilter/x86/vf_psnr_init.c
+    #    libavfilter/x86/vf_removegrain_init.c
+    #    #    libavfilter/x86/vf_ssim.c
+    #    libavfilter/x86/vf_ssim_init.c
+    #    #    libavfilter/x86/vf_maskedmerge.c
+    #    #    libavfilter/x86/vf_threshold.c
+    #    libavfilter/x86/vf_threshold_init.c
+    #    #    libavfilter/x86/vf_transpose.c
+    #    libavfilter/x86/vf_transpose_init.c
+    #    #    libavfilter/x86/vf_psnr.c
+    #    #    libavfilter/x86/vf_overlay.c
+    #    #    libavfilter/x86/vf_v360.c
+    #    libavfilter/x86/vf_v360_init.c
+    #    #    libavfilter/x86/vf_w3fdif.c
+    #    libavfilter/x86/vf_w3fdif_init.c
+    #    #    libavfilter/x86/vf_ssim.c
+    #    #    libavfilter/x86/vf_blend.c
+    #    #    libavfilter/x86/vf_yadif.c
+    #        libavfilter/x86/vf_yadif_init.c
+    #    #    libavfilter/x86/vf_threshold.c
+    #    #    libavfilter/x86/vf_transpose.c
+    #    #    libavfilter/x86/vf_bwdif.c
+    #    #    libavfilter/x86/vf_w3fdif.c
+    #    #    libavfilter/x86/yadif-10.c
+    #    #    libavfilter/x86/vf_v360.c
+    #    #    libavfilter/x86/yadif-16.c
     libavfilter/yadif_common.c
+    #libavfilter/libavfilter.pc
+
+
+
     )
 
 list(APPEND avformat_srcs
+    #    libavformat/3dostr.c
+    #    libavformat/4xm.c
+    #    libavformat/a64.c
+    #    libavformat/aacdec.c
+    #    libavformat/aadec.c
+    #    libavformat/ac3dec.c
+    #    libavformat/acm.c
+    #    libavformat/act.c
+    #    libavformat/adp.c
+    #    libavformat/ads.c
+    #    libavformat/adtsenc.c
+    #    libavformat/adxdec.c
+    #    libavformat/aea.c
+    #    libavformat/afc.c
+    #    libavformat/aiffdec.c
+    #    libavformat/aiffenc.c
+    #    libavformat/aixdec.c
+    #    libavformat/allformats.c
+    #    libavformat/amr.c
+    #    libavformat/anm.c
+    #    libavformat/apc.c
+    #    libavformat/ape.c
+    #    libavformat/apetag.c
+    #    libavformat/apngdec.c
+    #    libavformat/apngenc.c
+    #    libavformat/aptxdec.c
+    #    libavformat/aqtitledec.c
+    #    libavformat/asf.c
+    #    libavformat/asfcrypt.c
+    #    libavformat/asfdec_f.c
+    #    libavformat/asfdec_o.c
+    #    libavformat/asfenc.c
+    #    libavformat/assdec.c
+    #    libavformat/assenc.c
+    #    libavformat/ast.c
+    #    libavformat/astdec.c
+    #    libavformat/astenc.c
+    #    libavformat/async.c
+    #    libavformat/au.c
+    #    #    libavformat/audiointerleave.c
+    #    libavformat/av1.c
+    #    libavformat/avc.c
+    #    libavformat/avidec.c
+    #    libavformat/avienc.c
+    #    libavformat/avio.c
+    #    libavformat/aviobuf.c
+    #    libavformat/avlanguage.c
+    #    libavformat/avr.c
+    #    libavformat/avs.c
+    #    libavformat/bethsoftvid.c
+    #    libavformat/bfi.c
+    #    libavformat/bink.c
+    #    libavformat/bintext.c
+    #    libavformat/bit.c
+    #    libavformat/bmv.c
+    #    libavformat/boadec.c
+    #    libavformat/brstm.c
+    #    libavformat/c93.c
+    #    libavformat/cache.c
+    #    libavformat/caf.c
+    #    libavformat/cafdec.c
+    #    libavformat/cafenc.c
+    #    libavformat/cavsvideodec.c
+    #    libavformat/cdg.c
+    #    libavformat/cdxl.c
+    #    libavformat/cinedec.c
+    #    libavformat/codec2.c
+    #    libavformat/concat.c
+    #    libavformat/concatdec.c
+    #    libavformat/crcenc.c
+    #    libavformat/crypto.c
+    #    libavformat/cutils.c
+    #    libavformat/dash.c
+    #    libavformat/dashenc.c
+    #    libavformat/data_uri.c
+    #    libavformat/dauddec.c
+    #    libavformat/daudenc.c
+
+    #    libavformat/dcstr.c
+    #    libavformat/dfa.c
+    #    libavformat/diracdec.c
+    #    libavformat/dnxhddec.c
+    #    libavformat/dsfdec.c
+    #    libavformat/dsicin.c
+    #    libavformat/dss.c
+    #    libavformat/dtsdec.c
+    #    libavformat/dtshddec.c
+    #    libavformat/dump.c
+    #    libavformat/dv.c
+    #    libavformat/dvbsub.c
+    #    libavformat/dvbtxt.c
+    #    libavformat/dvenc.c
+    #    libavformat/dxa.c
+    #    libavformat/eacdata.c
+    #    libavformat/electronicarts.c
+    #    libavformat/epafdec.c
+    #    libavformat/ffmetadec.c
+    #    libavformat/ffmetaenc.c
+    #    libavformat/fifo.c
+    #    libavformat/fifo_test.c
+    #    libavformat/file.c
+    #    libavformat/filmstripdec.c
+    #    libavformat/filmstripenc.c
+    #    libavformat/fitsdec.c
+    #    libavformat/fitsenc.c
+    #    libavformat/flac_picture.c
+    #    libavformat/flacdec.c
+    #    libavformat/flacenc.c
+    #    libavformat/flacenc_header.c
+    #    libavformat/flic.c
+    #    libavformat/flvdec.c
+    #    libavformat/flvenc.c
+    #    libavformat/format.c
+    #    libavformat/framecrcenc.c
+    #    libavformat/framehash.c
+    #    libavformat/frmdec.c
+    #    libavformat/fsb.c
+    #    libavformat/ftp.c
+    #    libavformat/g722.c
+    #    libavformat/g723_1.c
+    #    libavformat/g726.c
+    #    libavformat/g729dec.c
+    #    libavformat/gdv.c
+    #    libavformat/genh.c
+    #    libavformat/gif.c
+    #    libavformat/gifdec.c
+    #    libavformat/gopher.c
+    #    libavformat/gsmdec.c
+    #    libavformat/gxf.c
+    #    libavformat/gxfenc.c
+    #    libavformat/h261dec.c
+    #    libavformat/h263dec.c
+    #    libavformat/h264dec.c
+    #    libavformat/hashenc.c
+    #    libavformat/hdsenc.c
+    #    libavformat/hevc.c
+    #    libavformat/hevcdec.c
+    #    libavformat/hls.c
+    #    libavformat/hlsenc.c
+    #    libavformat/hlsplaylist.c
+    #    libavformat/hlsproto.c
+    #    libavformat/hnm.c
+    #    libavformat/http.c
+    #    libavformat/httpauth.c
+    #    libavformat/icecast.c
+    #    libavformat/icodec.c
+    #    libavformat/icoenc.c
+    #    libavformat/id3v1.c
+    #    libavformat/id3v2.c
+    #    libavformat/id3v2enc.c
+    #    libavformat/idcin.c
+    #    libavformat/idroqdec.c
+    #    libavformat/idroqenc.c
+    #    libavformat/iff.c
+    #    libavformat/ilbc.c
+    #    libavformat/img2.c
+    #    libavformat/img2_alias_pix.c
+    #    libavformat/img2_brender_pix.c
+    #    libavformat/img2dec.c
+    #    libavformat/img2enc.c
+    #    libavformat/ingenientdec.c
+    #    libavformat/ip.c
+    #    libavformat/ipmovie.c
+    #    libavformat/ircam.c
+    #    libavformat/ircamdec.c
+    libavformat/ircamenc.c
+    #    libavformat/isom.c
+    #    libavformat/iss.c
+    #    libavformat/iv8.c
+    #    libavformat/ivfdec.c
+    #    libavformat/ivfenc.c
+    #    libavformat/jacosubdec.c
+    #    libavformat/jacosubenc.c
+    #    libavformat/jvdec.c
+    #    libavformat/latmenc.c
+    #    libavformat/lmlm4.c
+    #    libavformat/loasdec.c
+    #    libavformat/lrc.c
+    #    libavformat/lrcdec.c
+    #    libavformat/lrcenc.c
+    #    libavformat/lvfdec.c
+    #    libavformat/lxfdec.c
+    #    libavformat/m4vdec.c
+    #    libavformat/matroska.c
+    #    libavformat/matroskadec.c
+    #    libavformat/matroskaenc.c
+    #    libavformat/md5proto.c
+    #    libavformat/metadata.c
+    #    libavformat/mgsts.c
+    #    libavformat/microdvddec.c
+    #    libavformat/microdvdenc.c
+    #    libavformat/mj2kdec.c
+    #    libavformat/mkvtimestamp_v2.c
+    #    libavformat/mlpdec.c
+    #    libavformat/mlvdec.c
+    #    libavformat/mm.c
+    #    libavformat/mmf.c
+    #    libavformat/mms.c
+    #    libavformat/mmsh.c
+    #    libavformat/mmst.c
+    #    libavformat/mov.c
+    #    libavformat/mov_chan.c
+    #    libavformat/mov_esds.c
+    #    libavformat/movenc.c
+    #    libavformat/movenccenc.c
+    #    libavformat/movenchint.c
+    #    libavformat/mp3dec.c
+    #    libavformat/mp3enc.c
+    #    libavformat/mpc.c
+    #    libavformat/mpc8.c
+    #    libavformat/mpeg.c
+    #    libavformat/mpegenc.c
+    #    libavformat/mpegts.c
+    #    libavformat/mpegtsenc.c
+    #    libavformat/mpegvideodec.c
+    #    libavformat/mpjpeg.c
+    #    libavformat/mpjpegdec.c
+    #    libavformat/mpl2dec.c
+    #    libavformat/mpsubdec.c
+    #    libavformat/msf.c
+    #    libavformat/msnwc_tcp.c
+    #    libavformat/mtaf.c
+    #    libavformat/mtv.c
+    #    libavformat/musx.c
+    #    libavformat/mux.c
+    #    libavformat/mvdec.c
+    #    libavformat/mvi.c
+    #    libavformat/mxf.c
+    #    libavformat/mxfdec.c
+    #    libavformat/mxfenc.c
+    #    libavformat/mxg.c
+    #    libavformat/ncdec.c
+    #    libavformat/network.c
+    #    libavformat/nistspheredec.c
+    #    libavformat/nspdec.c
+    #    libavformat/nsvdec.c
+    #    libavformat/nullenc.c
+    #    libavformat/nut.c
+    #    libavformat/nutdec.c
+    #    libavformat/nutenc.c
+    #    libavformat/nuv.c
+    #    libavformat/oggdec.c
+    #    libavformat/oggenc.c
+    #    libavformat/oggparsecelt.c
+    #    #    libavformat/oggparsedaala.c
+    #    libavformat/oggparsedirac.c
+    #    libavformat/oggparseflac.c
+    #    libavformat/oggparseogm.c
+    #    libavformat/oggparseopus.c
+    #    libavformat/oggparseskeleton.c
+    #    libavformat/oggparsespeex.c
+    #    libavformat/oggparsetheora.c
+    #    libavformat/oggparsevorbis.c
+    #    libavformat/oggparsevp8.c
+    #    libavformat/oma.c
+    #    libavformat/omadec.c
+    #    libavformat/omaenc.c
+    #    libavformat/options.c
+    #    libavformat/os_support.c
+    #    libavformat/paf.c
+    #    libavformat/pcm.c
+    #    libavformat/pcmdec.c
+    #    libavformat/pcmenc.c
+    #    libavformat/pjsdec.c
+    #    libavformat/pmpdec.c
+    #    libavformat/prompeg.c
+    #    libavformat/protocols.c
+    #    libavformat/psxstr.c
+    #    libavformat/pva.c
+    #    libavformat/pvfdec.c
+    #    libavformat/qcp.c
+    #    libavformat/qtpalette.c
+    #    libavformat/r3d.c
+    #    libavformat/rawdec.c
+    #    libavformat/rawenc.c
+    #    libavformat/rawutils.c
+    #    libavformat/rawvideodec.c
+    #    libavformat/rdt.c
+    #    libavformat/realtextdec.c
+    #    libavformat/redspark.c
+    #    libavformat/replaygain.c
+    #    libavformat/riff.c
+    #    libavformat/riffdec.c
+    #    libavformat/riffenc.c
+    #    libavformat/rl2.c
+    #    libavformat/rm.c
+    #    libavformat/rmdec.c
+    #    libavformat/rmenc.c
+    #    libavformat/rmsipr.c
+    #    libavformat/rpl.c
+    #    libavformat/rsd.c
+    #    libavformat/rso.c
+    #    libavformat/rsodec.c
+    #    libavformat/rsoenc.c
+    #    libavformat/rtmpdigest.c
+    #    libavformat/rtmphttp.c
+    #    libavformat/rtmppkt.c
+    #    libavformat/rtmpproto.c
+    #    libavformat/rtp.c
+    #    libavformat/rtpdec.c
+    #    libavformat/rtpdec_ac3.c
+    #    libavformat/rtpdec_amr.c
+    #    libavformat/rtpdec_asf.c
+    #    libavformat/rtpdec_dv.c
+    #    libavformat/rtpdec_g726.c
+    #    libavformat/rtpdec_h261.c
+    #    libavformat/rtpdec_h263.c
+    #    libavformat/rtpdec_h263_rfc2190.c
+    #    libavformat/rtpdec_h264.c
+    #    libavformat/rtpdec_hevc.c
+    #    libavformat/rtpdec_ilbc.c
+    #    libavformat/rtpdec_jpeg.c
+    #    libavformat/rtpdec_latm.c
+    #    libavformat/rtpdec_mpa_robust.c
+    #    libavformat/rtpdec_mpeg12.c
+    #    libavformat/rtpdec_mpeg4.c
+    #    libavformat/rtpdec_mpegts.c
+    #    libavformat/rtpdec_qcelp.c
+    #    libavformat/rtpdec_qdm2.c
+    #    libavformat/rtpdec_qt.c
+    #    libavformat/rtpdec_rfc4175.c
+    #    libavformat/rtpdec_svq3.c
+    #    libavformat/rtpdec_vc2hq.c
+    #    libavformat/rtpdec_vp8.c
+    #    libavformat/rtpdec_vp9.c
+    #    libavformat/rtpdec_xiph.c
+    #    libavformat/rtpenc.c
+    #    libavformat/rtpenc_aac.c
+    #    libavformat/rtpenc_amr.c
+    #    libavformat/rtpenc_chain.c
+    #    libavformat/rtpenc_h261.c
+    #    libavformat/rtpenc_h263.c
+    #    libavformat/rtpenc_h263_rfc2190.c
+    #    libavformat/rtpenc_h264_hevc.c
+    #    libavformat/rtpenc_jpeg.c
+    #    libavformat/rtpenc_latm.c
+    #    libavformat/rtpenc_mpegts.c
+    #    libavformat/rtpenc_mpv.c
+    #    libavformat/rtpenc_vc2hq.c
+    #    libavformat/rtpenc_vp8.c
+    #    libavformat/rtpenc_vp9.c
+    #    libavformat/rtpenc_xiph.c
+    #    libavformat/rtpproto.c
+    #    libavformat/rtsp.c
+    #    libavformat/rtspdec.c
+    #    libavformat/rtspenc.c
+    #    libavformat/s337m.c
+    #    libavformat/samidec.c
+    #    libavformat/sapdec.c
+    #    libavformat/sapenc.c
+    #    libavformat/sauce.c
+    #    libavformat/sbcdec.c
+    #    libavformat/sbgdec.c
+    #    libavformat/sccdec.c
+    #    libavformat/sccenc.c
+    #    libavformat/sdp.c
+    #    libavformat/sdr2.c
+    #    libavformat/sdsdec.c
+    #    libavformat/sdxdec.c
+    #    libavformat/segafilm.c
+    #    libavformat/segafilmenc.c
+    #    libavformat/segment.c
+    #    libavformat/serdec.c
+    #    libavformat/shortendec.c
+    #    libavformat/sierravmd.c
+    #    libavformat/siff.c
+    #    libavformat/smacker.c
+    #    libavformat/smjpeg.c
+    #    libavformat/smjpegdec.c
+    #    libavformat/smjpegenc.c
+    #    libavformat/smoothstreamingenc.c
+    #    libavformat/smush.c
+    #    libavformat/sol.c
+    #    libavformat/soxdec.c
+    #    libavformat/soxenc.c
+    #    libavformat/spdif.c
+    #    libavformat/spdifdec.c
+    #    libavformat/spdifenc.c
+    #    libavformat/srtdec.c
+    #    libavformat/srtenc.c
+    #    libavformat/srtp.c
+    #    libavformat/srtpproto.c
+    #    libavformat/stldec.c
+    #    libavformat/subfile.c
+    #    libavformat/subtitles.c
+    #    libavformat/subviewer1dec.c
+    #    libavformat/subviewerdec.c
+    #    libavformat/supdec.c
+    #    libavformat/supenc.c
+    #    libavformat/svag.c
+    #    libavformat/swf.c
+    #    libavformat/swfdec.c
+    #    libavformat/swfenc.c
+    #    libavformat/takdec.c
+    #    libavformat/tcp.c
+    #    libavformat/tedcaptionsdec.c
+    #    libavformat/tee.c
+    #    libavformat/tee_common.c
+    #    libavformat/teeproto.c
+    #    libavformat/thp.c
+    #    libavformat/tiertexseq.c
+    #    libavformat/tmv.c
+    #    libavformat/tta.c
+    #    libavformat/ttaenc.c
+    #    libavformat/tty.c
+    #    libavformat/txd.c
+    #    libavformat/ty.c
+    #    libavformat/udp.c
+    #    libavformat/uncodedframecrcenc.c
+    #    libavformat/unix.c
+    #    libavformat/url.c
+    #    libavformat/urldecode.c
+    #    libavformat/utils.c
+    #    libavformat/v210.c
+    #    libavformat/vag.c
+    #    libavformat/vc1dec.c
+    #    libavformat/vc1test.c
+    #    libavformat/vc1testenc.c
+    #    libavformat/vivo.c
+    #    libavformat/voc.c
+    #    libavformat/voc_packet.c
+    #    libavformat/vocdec.c
+    #    libavformat/vocenc.c
+    #    libavformat/vorbiscomment.c
+    #    libavformat/vpcc.c
+    #    libavformat/vpk.c
+    #    libavformat/vplayerdec.c
+    #    libavformat/vqf.c
+    #    libavformat/w64.c
+    #    libavformat/wavdec.c
+    #    libavformat/wavenc.c
+    #    libavformat/wc3movie.c
+    #    libavformat/webm_chunk.c
+    #    libavformat/webmdashenc.c
+    #    libavformat/webpenc.c
+    #    libavformat/webvttdec.c
+    #    libavformat/webvttenc.c
+    #    libavformat/westwood_aud.c
+    #    libavformat/westwood_vqa.c
+    #    libavformat/wsddec.c
+    #    libavformat/wtv_common.c
+    #    libavformat/wtvdec.c
+    #    libavformat/wtvenc.c
+    #    libavformat/wv.c
+    #    libavformat/wvdec.c
+    #    libavformat/wvedec.c
+    #    libavformat/wvenc.c
+    #    libavformat/xa.c
+    #    libavformat/xmv.c
+    #    libavformat/xvag.c
+    #    libavformat/xwma.c
+    #    libavformat/yop.c
+    #    libavformat/yuv4mpegdec.c
+    #    libavformat/yuv4mpegenc.c
+    #    libavformat/dvbsub.c
+
+
+    #0108
+    libavformat/isom.c
+
+
     libavformat/3dostr.c
     libavformat/4xm.c
     libavformat/a64.c
@@ -405,6 +1248,7 @@ list(APPEND avformat_srcs
     libavformat/aaxdec.c
     libavformat/ac3dec.c
     libavformat/acedec.c
+    #   libavfilter/yadif-10.c
     libavformat/acm.c
     libavformat/act.c
     libavformat/adp.c
@@ -417,6 +1261,7 @@ list(APPEND avformat_srcs
     libavformat/aiffenc.c
     libavformat/aixdec.c
     libavformat/allformats.c
+    #   libavfilter/x86/vf_yadif.c
     libavformat/alp.c
     libavformat/amr.c
     libavformat/amvenc.c
@@ -428,6 +1273,7 @@ list(APPEND avformat_srcs
     libavformat/apngdec.c
     libavformat/apngenc.c
     libavformat/aptxdec.c
+    #   libavfilter/x86/yadif-16.c
     libavformat/aqtitledec.c
     libavformat/argo_asf.c
     libavformat/argo_brp.c
@@ -445,6 +1291,7 @@ list(APPEND avformat_srcs
     libavformat/au.c
     libavformat/av1.c
     libavformat/av1dec.c
+    #   libavfilter/x86/colorspacedsp.c
     libavformat/avc.c
     libavformat/avidec.c
     libavformat/avienc.c
@@ -577,8 +1424,6 @@ list(APPEND avformat_srcs
     libavformat/ipudec.c
     libavformat/ircam.c
     libavformat/ircamdec.c
-    libavformat/ircamenc.c
-    libavformat/isom.c
     libavformat/iss.c
     libavformat/iv8.c
     libavformat/ivfdec.c
@@ -735,8 +1580,8 @@ list(APPEND avformat_srcs
     libavformat/rtpdec_mpa_robust.c
     libavformat/rtpdec_mpeg12.c
     libavformat/rtpdec_mpeg4.c
-    libavformat/rtpdec_mpegts.c
     libavformat/rtpdec_qcelp.c
+    libavformat/rtpdec_mpegts.c
     libavformat/rtpdec_qdm2.c
     libavformat/rtpdec_qt.c
     libavformat/rtpdec_rfc4175.c
@@ -879,6 +1724,9 @@ list(APPEND avformat_srcs
     )
 
 list(APPEND avcodec_srcs
+
+    libavcodec/pcm.c
+
     libavcodec/012v.c
     libavcodec/4xm.c
     libavcodec/8bps.c
@@ -1141,8 +1989,8 @@ list(APPEND avcodec_srcs
     libavcodec/fft_fixed_32.c
     libavcodec/fft_float.c
     libavcodec/fft_init_table.c
-    libavcodec/ffv1dec.c
     libavcodec/ffv1.c
+    libavcodec/ffv1dec.c
     libavcodec/ffv1enc.c
     libavcodec/ffwavesynth.c
     libavcodec/fic.c
@@ -1305,7 +2153,6 @@ list(APPEND avcodec_srcs
     libavcodec/latm_parser.c
     libavcodec/lcldec.c
     libavcodec/lclenc.c
-    libavcodec/libx264.c
     libavcodec/ljpegenc.c
     libavcodec/loco.c
     libavcodec/lossless_audiodsp.c
@@ -1631,6 +2478,7 @@ list(APPEND avcodec_srcs
     libavcodec/v4l2_context.c
     libavcodec/v4l2_fmt.c
     libavcodec/v4l2_m2m.c
+
     libavcodec/v4l2_m2m_dec.c
     libavcodec/v4l2_m2m_enc.c
     libavcodec/vaapi_decode.c
@@ -1711,7 +2559,6 @@ list(APPEND avcodec_srcs
     libavcodec/vp9recon.c
     libavcodec/vqavideo.c
     libavcodec/wavpack.c
-    libavcodec/wavpackdata.c
     libavcodec/wavpackenc.c
     libavcodec/wcmv.c
     libavcodec/webp.c
@@ -1734,7 +2581,259 @@ list(APPEND avcodec_srcs
     libavcodec/wnv1.c
     libavcodec/wrapped_avframe.c
     libavcodec/ws-snd1.c
+    libavcodec/wavpackdata.c
+    ##    libavcodec/x86/aacencdsp.c
+    #    libavcodec/x86/aacencdsp_init.c
+    ##    libavcodec/x86/aacpsdsp.c
+    #    libavcodec/x86/aacpsdsp_init.c
+    ##    libavcodec/x86/ac3dsp.c
+    ##    libavcodec/x86/ac3dsp_downmix.c
+    #    libavcodec/x86/ac3dsp_init.c
+    ##    libavcodec/x86/alacdsp.c
+    #    libavcodec/x86/alacdsp_init.c
+    ##    libavcodec/x86/audiodsp.c
+    #    libavcodec/x86/audiodsp_init.c
+    ##    libavcodec/x86/blockdsp.c
+    ##    libavcodec/x86/aacencdsp.c
+    #    libavcodec/x86/blockdsp_init.c
+    ##    libavcodec/x86/alacdsp.c
+    ##    libavcodec/x86/blockdsp.c
+    ##    libavcodec/x86/bswapdsp.c
+    #    libavcodec/x86/bswapdsp_init.c
+    ##    libavcodec/x86/audiodsp.c
+    ##    libavcodec/x86/ac3dsp.c
+    #    libavcodec/x86/cavsdsp.c
+    ##    libavcodec/x86/bswapdsp.c
+    ##    libavcodec/x86/cavsidct.c
+    #    libavcodec/x86/celt_pvq_init.c
+    ##    libavcodec/x86/celt_pvq_search.c
+    ##    libavcodec/x86/aacpsdsp.c
+    ##    libavcodec/x86/ac3dsp_downmix.c
+    ##    libavcodec/x86/cfhddsp.c
+    #    libavcodec/x86/cfhddsp_init.c
+    #    libavcodec/x86/constants.c
+    ##    libavcodec/x86/dcadsp.c
+    #    libavcodec/x86/dcadsp_init.c
+    ##    libavcodec/x86/dct32.c
+    ##    libavcodec/x86/cfhddsp.c
+    #    libavcodec/x86/dct_init.c
+    ##    libavcodec/x86/cavsidct.c
+    ##    libavcodec/x86/dirac_dwt.c
+    ##    libavcodec/x86/celt_pvq_search.c
+    #    libavcodec/x86/dirac_dwt_init.c
+    ##    libavcodec/x86/diracdsp.c
+    #    libavcodec/x86/diracdsp_init.c
+    ##    libavcodec/x86/dnxhdenc.c
+    ##    libavcodec/x86/dirac_dwt.c
+    ##    libavcodec/x86/dcadsp.c
+    #    libavcodec/x86/dnxhdenc_init.c
+    ##    libavcodec/x86/exrdsp.c
+    ##    libavcodec/x86/dct32.c
+    #    libavcodec/x86/exrdsp_init.c
+    ##    libavcodec/x86/dnxhdenc.c
+    #    libavcodec/x86/fdct.c
+    #    libavcodec/x86/fdctdsp_init.c
+    ##    libavcodec/x86/fft.c
+    ##    libavcodec/x86/exrdsp.c
+    #    libavcodec/x86/fft_init.c
+    ##    libavcodec/x86/diracdsp.c
+    ##    libavcodec/x86/flacdsp.c
+    #    libavcodec/x86/flacdsp_init.c
+    ##    libavcodec/x86/fmtconvert.c
+    #    libavcodec/x86/fmtconvert_init.c
+    ##    libavcodec/x86/fpel.c
+    ##    libavcodec/x86/g722dsp.c
+    #    libavcodec/x86/g722dsp_init.c
+    ##    libavcodec/x86/flacdsp.c
+    ##    libavcodec/x86/h263_loopfilter.c
+    ##    libavcodec/x86/fmtconvert.c
+    #    libavcodec/x86/h263dsp_init.c
+    ##    libavcodec/x86/h264_chromamc.c
+    ##    libavcodec/x86/h264_chromamc_10bit.c
+    ##    libavcodec/x86/h264_deblock.c
+    ##    libavcodec/x86/h264_deblock_10bit.c
+    ##    libavcodec/x86/fft.c
+    ##    libavcodec/x86/h264_idct.c
+    ##    libavcodec/x86/fpel.c
+    ##    libavcodec/x86/h264_idct_10bit.c
+    ##    libavcodec/x86/h264_intrapred.c
+    ##    libavcodec/x86/g722dsp.c
+    ##    libavcodec/x86/h264_intrapred_10bit.c
+    ##    libavcodec/x86/h263_loopfilter.c
+    #    libavcodec/x86/h264_intrapred_init.c
+    #    libavcodec/x86/h264_qpel.c
+    ##    libavcodec/x86/h264_qpel_10bit.c
+    ##    libavcodec/x86/h264_chromamc_10bit.c
+    ##    libavcodec/x86/h264_qpel_8bit.c
+    ##    libavcodec/x86/h264_weight.c
+    ##    libavcodec/x86/h264_weight_10bit.c
+    #    libavcodec/x86/h264chroma_init.c
+    #    libavcodec/x86/h264dsp_init.c
+    ##    libavcodec/x86/hevc_add_res.c
+    ##    libavcodec/x86/hevc_deblock.c
+    ##    libavcodec/x86/hevc_idct.c
+    ##    libavcodec/x86/hevc_mc.c
+    ##    libavcodec/x86/h264_weight.c
+    ##    libavcodec/x86/hevc_sao.c
+    ##    libavcodec/x86/h264_weight_10bit.c
+    ##    libavcodec/x86/hevc_sao_10bit.c
+    ##    libavcodec/x86/h264_chromamc.c
+    #    libavcodec/x86/hevcdsp_init.c
+    ##    libavcodec/x86/h264_deblock_10bit.c
+    ##    libavcodec/x86/hpeldsp.c
+    ##    libavcodec/x86/hevc_add_res.c
+    #    libavcodec/x86/hpeldsp_init.c
+    ##    libavcodec/x86/h264_idct_10bit.c
+    ##    libavcodec/x86/hpeldsp_vp3.c
+    ##    libavcodec/x86/h264_idct.c
+    #    libavcodec/x86/hpeldsp_vp3_init.c
+    ##    libavcodec/x86/hpeldsp_vp3.c
+    ##    libavcodec/x86/huffyuvdsp.c
+    ##    libavcodec/x86/h264_intrapred_10bit.c
+    #    libavcodec/x86/huffyuvdsp_init.c
+    ##    libavcodec/x86/huffyuvencdsp.c
+    ##    libavcodec/x86/h264_qpel_10bit.c
+    #    libavcodec/x86/huffyuvencdsp_init.c
+    ##    libavcodec/x86/hpeldsp.c
+    ##    libavcodec/x86/idctdsp.c
+    #    libavcodec/x86/idctdsp_init.c
+    ##    libavcodec/x86/imdct36.c
+    ##    libavcodec/x86/idctdsp.c
+    ##    libavcodec/x86/huffyuvencdsp.c
+    ##    libavcodec/x86/jpeg2000dsp.c
+    ##    libavcodec/x86/huffyuvdsp.c
+    #    libavcodec/x86/jpeg2000dsp_init.c
+    ##    libavcodec/x86/lossless_audiodsp.c
+    #    libavcodec/x86/lossless_audiodsp_init.c
+    ##    libavcodec/x86/lossless_videodsp.c
+    ##    libavcodec/x86/hevc_sao.c
+    #    libavcodec/x86/lossless_videodsp_init.c
+    ##    libavcodec/x86/lossless_videoencdsp.c
+    ##    libavcodec/x86/h264_deblock.c
+    #    libavcodec/x86/lossless_videoencdsp_init.c
+    ##    libavcodec/x86/h264_qpel_8bit.c
+    #    libavcodec/x86/lpc.c
+    ##    libavcodec/x86/mdct15.c
+    #    libavcodec/x86/mdct15_init.c
+    ##    libavcodec/x86/jpeg2000dsp.c
+    ##    libavcodec/x86/me_cmp.c
+    #    libavcodec/x86/me_cmp_init.c
+    ##    libavcodec/x86/mlpdsp.c
+    ##    libavcodec/x86/lossless_videoencdsp.c
+    #    libavcodec/x86/mlpdsp_init.c
+    #    libavcodec/x86/mpegaudiodsp.c
+    #    libavcodec/x86/mpegvideo.c
+    ##    libavcodec/x86/lossless_audiodsp.c
+    #    libavcodec/x86/mpegvideodsp.c
+    ##    libavcodec/x86/lossless_videodsp.c
+    #    libavcodec/x86/mpegvideoenc.c
+    ##    libavcodec/x86/mpegvideoencdsp.c
+    ##    libavcodec/x86/mdct15.c
+    #    libavcodec/x86/mpegvideoencdsp_init.c
+    ##    libavcodec/x86/opusdsp.c
+    ##    libavcodec/x86/mlpdsp.c
+    #    libavcodec/x86/opusdsp_init.c
+    ##    libavcodec/x86/pixblockdsp.c
+    #    libavcodec/x86/pixblockdsp_init.c
+    ##    libavcodec/x86/opusdsp.c
+    ##    libavcodec/x86/pngdsp.c
+    ##    libavcodec/x86/mpegvideoencdsp.c
+    #    libavcodec/x86/pngdsp_init.c
+    ##    libavcodec/x86/proresdsp.c
+    #    libavcodec/x86/proresdsp_init.c
+    ##    libavcodec/x86/qpel.c
+    ##    libavcodec/x86/qpeldsp.c
+    ##    libavcodec/x86/imdct36.c
+    #    libavcodec/x86/qpeldsp_init.c
+    ##    libavcodec/x86/rv34dsp.c
+    ##    libavcodec/x86/pixblockdsp.c
+    #    libavcodec/x86/rv34dsp_init.c
+    ##    libavcodec/x86/pngdsp.c
+    ##    libavcodec/x86/rv40dsp.c
+    #    libavcodec/x86/rv40dsp_init.c
+    ##    libavcodec/x86/sbcdsp.c
+    ##    libavcodec/x86/qpel.c
+    #    libavcodec/x86/sbcdsp_init.c
+    ##    libavcodec/x86/rv34dsp.c
+    ##    libavcodec/x86/sbrdsp.c
+    #    libavcodec/x86/sbrdsp_init.c
+    ##    libavcodec/x86/sbcdsp.c
+    ##    libavcodec/x86/simple_idct.c
+    ##    libavcodec/x86/proresdsp.c
+    ##    libavcodec/x86/simple_idct10.c
+    #    libavcodec/x86/snowdsp.c
+    ##    libavcodec/x86/svq1enc.c
+    #    libavcodec/x86/svq1enc_init.c
+    ##    libavcodec/x86/rv40dsp.c
+    ##    libavcodec/x86/synth_filter.c
+    ##    libavcodec/x86/svq1enc.c
+    #    libavcodec/x86/synth_filter_init.c
+    ##    libavcodec/x86/takdsp.c
+    ##    libavcodec/x86/sbrdsp.c
+    #    libavcodec/x86/takdsp_init.c
+    ##    libavcodec/x86/ttadsp.c
+    ##    libavcodec/x86/me_cmp.c
+    #    libavcodec/x86/ttadsp_init.c
+    ##    libavcodec/x86/ttaencdsp.c
+    ##    libavcodec/x86/hevc_sao_10bit.c
+    #    libavcodec/x86/ttaencdsp_init.c
+    ##    libavcodec/x86/utvideodsp.c
+    ##    libavcodec/x86/h264_intrapred.c
+    #    libavcodec/x86/utvideodsp_init.c
+    #    libavcodec/x86/v210-init.c
+    ##    libavcodec/x86/v210.c
+    ##    libavcodec/x86/synth_filter.c
+    ##    libavcodec/x86/takdsp.c
+    ##    libavcodec/x86/v210enc.c
+    #    libavcodec/x86/v210enc_init.c
+    #    libavcodec/x86/vc1dsp_init.c
+    ##    libavcodec/x86/vc1dsp_loopfilter.c
+    ##    libavcodec/x86/ttaencdsp.c
+    ##    libavcodec/x86/ttadsp.c
+    ##    libavcodec/x86/vc1dsp_mc.c
+    #    libavcodec/x86/vc1dsp_mmx.c
+    ##    libavcodec/x86/videodsp.c
+    ##    libavcodec/x86/utvideodsp.c
+    #    libavcodec/x86/videodsp_init.c
+    ##    libavcodec/x86/v210.c
+    ##    libavcodec/x86/vorbisdsp.c
+    ##    libavcodec/x86/qpeldsp.c
+    #    libavcodec/x86/vorbisdsp_init.c
+    ##    libavcodec/x86/vp3dsp.c
+    ##    libavcodec/x86/v210enc.c
+    #    libavcodec/x86/vp3dsp_init.c
+    ##    libavcodec/x86/hevc_idct.c
+    ##    libavcodec/x86/vp6dsp.c
+    #    libavcodec/x86/vp6dsp_init.c
+    ##    libavcodec/x86/vorbisdsp.c
+    ##    libavcodec/x86/vp8dsp.c
+    ##    libavcodec/x86/vc1dsp_mc.c
+    #    libavcodec/x86/vp8dsp_init.c
+    ##    libavcodec/x86/vp8dsp_loopfilter.c
+    #    libavcodec/x86/vp9dsp_init.c
+    #    libavcodec/x86/vp9dsp_init_10bpp.c
+    #    libavcodec/x86/vp9dsp_init_12bpp.c
+    ##    libavcodec/x86/vp6dsp.c
+    #    libavcodec/x86/vp9dsp_init_16bpp.c
+    ##    libavcodec/x86/vc1dsp_loopfilter.c
+    ##    libavcodec/x86/vp9intrapred.c
+    ##    libavcodec/x86/videodsp.c
+    ##    libavcodec/x86/vp9intrapred_16bpp.c
+    ##    libavcodec/x86/vp9itxfm.c
+    ##    libavcodec/x86/hevc_deblock.c
+    ##    libavcodec/x86/vp9itxfm_16bpp.c
+    ##    libavcodec/x86/vp3dsp.c
+    ##    libavcodec/x86/vp9lpf.c
+    ##    libavcodec/x86/vp9lpf_16bpp.c
+    ##    libavcodec/x86/vp9mc.c
+    ##    libavcodec/x86/vp8dsp.c
+    ##    libavcodec/x86/vp9mc_16bpp.c
+    ##    libavcodec/x86/simple_idct10.c
+    ##    libavcodec/x86/xvididct.c
+    ##    libavcodec/x86/vp9mc_16bpp.c
+    #    libavcodec/x86/xvididct_init.c
     libavcodec/xan.c
+    #    libavcodec/x86/vp9mc.c
     libavcodec/xbmdec.c
     libavcodec/xbmenc.c
     libavcodec/xface.c
@@ -1744,12 +2843,14 @@ list(APPEND avcodec_srcs
     libavcodec/xl.c
     libavcodec/xma_parser.c
     libavcodec/xpmdec.c
+    #    libavcodec/x86/xvididct.c
     libavcodec/xsubdec.c
     libavcodec/xsubenc.c
     libavcodec/xvididct.c
     libavcodec/xwddec.c
     libavcodec/xwdenc.c
     libavcodec/xxan.c
+    #    libavcodec/x86/vp8dsp_loopfilter.c
     libavcodec/y41pdec.c
     libavcodec/y41penc.c
     libavcodec/ylc.c
@@ -1759,9 +2860,21 @@ list(APPEND avcodec_srcs
     libavcodec/zerocodec.c
     libavcodec/zmbv.c
     libavcodec/zmbvenc.c
+    #    libavcodec/x86/vp9intrapred.c
+
+
     )
 
 list(APPEND swresample_srcs
+    #    libswresample/audioconvert.c
+    #    libswresample/dither.c
+    #    libswresample/options.c
+    #    libswresample/rematrix.c
+    #    libswresample/resample.c
+    #    libswresample/resample_dsp.c
+    #    libswresample/swresample.c
+    #    libswresample/swresample_frame.c
+
     libswresample/audioconvert.c
     libswresample/dither.c
     libswresample/options.c
@@ -1770,10 +2883,254 @@ list(APPEND swresample_srcs
     libswresample/resample_dsp.c
     libswresample/swresample.c
     libswresample/swresample_frame.c
+    #libswresample/x86/audio_convert_init.c
+    #libswresample/x86/rematrix_init.c
+    #libswresample/x86/resample_init.c
+    )
+
+list(APPEND swscale_srcs
+    #    libswscale/alphablend.c
+    #    libswscale/gamma.c
+    #    libswscale/hscale.c
+    #    libswscale/hscale_fast_bilinear.c
+    #    libswscale/input.c
+    #    libswscale/options.c
+    #    libswscale/output.c
+    #    libswscale/rgb2rgb.c
+    #    libswscale/slice.c
+    #    libswscale/swscale.c
+    #    libswscale/swscale_unscaled.c
+    #    libswscale/utils.c
+    #    libswscale/vscale.c
+    #    libswscale/yuv2rgb.c
+
+    libswscale/alphablend.c
+    libswscale/gamma.c
+    libswscale/hscale.c
+    libswscale/hscale_fast_bilinear.c
+    libswscale/input.c
+    #libswresample/x86/rematrix.c
+    libswscale/options.c
+    libswscale/output.c
+    #libavcodec/x86/vp9intrapred_16bpp.c
+    libswscale/rgb2rgb.c
+    libswscale/slice.c
+    libswscale/swscale.c
+    libswscale/swscale_unscaled.c
+    libswscale/utils.c
+    libswscale/vscale.c
+    #libswresample/x86/resample.c
+    #libswscale/x86/hscale_fast_bilinear_simd.c
+    #libswscale/x86/input.c
+    #libswscale/x86/output.c
+    #libswscale/x86/rgb2rgb.c
+    #libswscale/x86/rgb2rgb_template.c
+    #libswscale/x86/rgb_2_rgb.c
+    #libswscale/x86/scale.c
+    #libswscale/x86/rgb_2_rgb.c
+    #libswscale/x86/swscale.c
+    #libswscale/x86/input.c
+    #libswscale/x86/yuv2rgb.c
+    #libswscale/x86/output.c
+    #libswscale/x86/yuv_2_rgb.c
+    #libswresample/x86/audio_convert.c
+    libswscale/yuv2rgb.c
+    )
+
+list(APPEND avutil_srcs
+    #    libavutil/adler32.c
+    #    libavutil/aes.c
+    #    libavutil/aes_ctr.c
+    #    libavutil/audio_fifo.c
+    #    libavutil/avstring.c
+    #    libavutil/base64.c
+    #    libavutil/blowfish.c
+    #    libavutil/bprint.c
+    #    libavutil/buffer.c
+    #    libavutil/camellia.c
+    #    libavutil/cast5.c
+    #    libavutil/channel_layout.c
+    #    libavutil/color_utils.c
+    #    libavutil/cpu.c
+    #    libavutil/crc.c
+    #    libavutil/des.c
+    #    libavutil/dict.c
+    #    libavutil/display.c
+    #    libavutil/downmix_info.c
+    #    libavutil/encryption_info.c
+    #    libavutil/error.c
+    #    libavutil/eval.c
+    #    libavutil/fifo.c
+    #    libavutil/file.c
+    #    libavutil/file_open.c
+    #    libavutil/fixed_dsp.c
+    #    libavutil/float_dsp.c
+    #    libavutil/frame.c
+    #    libavutil/hash.c
+    #    libavutil/hmac.c
+    #    libavutil/hwcontext.c
+    #    libavutil/imgutils.c
+    #    libavutil/integer.c
+    #    libavutil/intmath.c
+    #    libavutil/lfg.c
+    #    libavutil/lls.c
+    #    libavutil/log.c
+    #    libavutil/log2_tab.c
+    #    libavutil/lzo.c
+    #    libavutil/mastering_display_metadata.c
+    #    libavutil/mathematics.c
+    #    libavutil/md5.c
+    #    libavutil/mem.c
+    #    libavutil/murmur3.c
+    #    libavutil/opt.c
+    #    libavutil/parseutils.c
+    #    libavutil/pixdesc.c
+    #    libavutil/pixelutils.c
+    #    libavutil/random_seed.c
+    #    libavutil/rational.c
+    #    libavutil/rc4.c
+    #    libavutil/reverse.c
+    #    libavutil/ripemd.c
+    #    libavutil/samplefmt.c
+    #    libavutil/sha.c
+    #    libavutil/sha512.c
+    #    libavutil/slicethread.c
+    #    libavutil/spherical.c
+    #    libavutil/stereo3d.c
+    #    libavutil/tea.c
+    #    libavutil/threadmessage.c
+    #    libavutil/time.c
+    #    libavutil/timecode.c
+    #    libavutil/tree.c
+    #    libavutil/twofish.c
+    #    libavutil/utils.c
+    libavutil/xga_font_data.c
+    #    libavutil/xtea.c
+    #    #add
+    #    libavutil/dovi_meta.c
+    #    libavutil/avsscanf.c
+
+    libavutil/video_enc_params.c
+
+    libavutil/adler32.c
+    libavutil/aes.c
+    libavutil/aes_ctr.c
+    libavutil/audio_fifo.c
+    libavutil/avsscanf.c
+    #libavcodec/x86/simple_idct.c
+    libavutil/avstring.c
+    libavutil/base64.c
+    #libswscale/x86/yuv_2_rgb.c
+    libavutil/blowfish.c
+    libavutil/bprint.c
+    libavutil/buffer.c
+    libavutil/camellia.c
+    libavutil/cast5.c
+    libavutil/channel_layout.c
+    libavutil/color_utils.c
+    libavutil/cpu.c
+    libavutil/crc.c
+    libavutil/des.c
+    libavutil/dict.c
+    libavutil/display.c
+    libavutil/dovi_meta.c
+    libavutil/downmix_info.c
+    #libavcodec/x86/vp9lpf_16bpp.c
+    libavutil/encryption_info.c
+    libavutil/error.c
+    libavutil/eval.c
+    libavutil/fifo.c
+    libavutil/file.c
+    libavutil/file_open.c
+    libavutil/film_grain_params.c
+    libavutil/fixed_dsp.c
+    libavutil/float_dsp.c
+    #libswscale/x86/scale.c
+    libavutil/frame.c
+    libavutil/hash.c
+    libavutil/hdr_dynamic_metadata.c
+    libavutil/hmac.c
+    libavutil/hwcontext.c
+    libavutil/hwcontext_vaapi.c
+    libavutil/hwcontext_vdpau.c
+    libavutil/imgutils.c
+    libavutil/integer.c
+    libavutil/intmath.c
+    libavutil/lfg.c
+    #libavcodec/x86/vp9itxfm_16bpp.c
+    libavutil/lls.c
+    libavutil/log.c
+    libavutil/log2_tab.c
+    libavutil/lzo.c
+    #libavcodec/x86/hevc_mc.c
+    libavutil/mastering_display_metadata.c
+    libavutil/mathematics.c
+    libavutil/md5.c
+    libavutil/mem.c
+    libavutil/murmur3.c
+    libavutil/opt.c
+    libavutil/parseutils.c
+    libavutil/pixdesc.c
+    libavutil/pixelutils.c
+    libavutil/random_seed.c
+    libavutil/rational.c
+    libavutil/rc4.c
+    libavutil/reverse.c
+    libavutil/ripemd.c
+    libavutil/samplefmt.c
+    libavutil/sha.c
+    libavutil/sha512.c
+    libavutil/slicethread.c
+    libavutil/spherical.c
+    libavutil/stereo3d.c
+    libavutil/tea.c
+    libavutil/threadmessage.c
+    libavutil/time.c
+    libavutil/timecode.c
+    libavutil/tree.c
+    libavutil/twofish.c
+    libavutil/tx.c
+    libavutil/tx_double.c
+    libavutil/tx_float.c
+    libavutil/tx_int32.c
+    libavutil/utils.c
+#    libavutil/x86/cpu.c
+    ##libavutil/x86/cpuid.c
+    ##libavutil/x86/fixed_dsp.c
+    #libavutil/x86/fixed_dsp_init.c
+    ##libavutil/x86/float_dsp.c
+    #libavutil/x86/float_dsp_init.c
+    ##libavutil/x86/imgutils.c
+    #libavutil/x86/imgutils_init.c
+    ##libavutil/x86/cpuid.c
+    ##libavutil/x86/lls.c
+    ##libavutil/x86/fixed_dsp.c
+    #libavutil/x86/lls_init.c
+    ##libavutil/x86/pixelutils.c
+    ##libavutil/x86/pixelutils_init.c
+    #libavutil/xga_font_data.c
+    #libavutil/xtea.c
+    ##libavutil/x86/emms.c
 
     )
 
 list(APPEND avdevice_srcs
+    #    libavdevice/alldevices.c
+    #    libavdevice/avdevice.c
+    #    libavdevice/fbdev_common.c
+    #    libavdevice/fbdev_dec.c
+    #    libavdevice/fbdev_enc.c
+    #    libavdevice/lavfi.c
+    #    libavdevice/oss.c
+    #    libavdevice/oss_dec.c
+    #    libavdevice/oss_enc.c
+    #    libavdevice/timefilter.c
+    #    libavdevice/utils.c
+    #    libavdevice/v4l2-common.c
+    #    libavdevice/v4l2.c
+    #    libavdevice/v4l2enc.c
+    #    libavdevice/xcbgrab.c
+
     libavdevice/alldevices.c
     libavdevice/alsa.c
     libavdevice/alsa_dec.c
@@ -1806,7 +3163,6 @@ list(APPEND ffmpeg_srcs
     fftools/ffmpeg_hw.c
     fftools/cmdutils.c
     fftools/ffmpeg.c
-
     )
 
 list(APPEND avresample_srcs
@@ -1819,106 +3175,6 @@ list(APPEND avresample_srcs
     libavresample/resample.c
     libavresample/utils.c
     )
-list(APPEND swscale_srcs
-
-    libswscale/alphablend.c
-    libswscale/gamma.c
-    libswscale/hscale.c
-    libswscale/hscale_fast_bilinear.c
-    libswscale/input.c
-    libswscale/options.c
-    libswscale/output.c
-    libswscale/rgb2rgb.c
-    libswscale/slice.c
-    libswscale/swscale.c
-    libswscale/swscale_unscaled.c
-    libswscale/utils.c
-    libswscale/vscale.c
-    libswscale/yuv2rgb.c
-    )
-
-list(APPEND avutil_srcs
-    libavutil/adler32.c
-    libavutil/aes.c
-    libavutil/aes_ctr.c
-    libavutil/audio_fifo.c
-    libavutil/avsscanf.c
-    libavutil/avstring.c
-    libavutil/base64.c
-    libavutil/blowfish.c
-    libavutil/bprint.c
-    libavutil/buffer.c
-    libavutil/camellia.c
-    libavutil/cast5.c
-    libavutil/channel_layout.c
-    libavutil/color_utils.c
-    libavutil/cpu.c
-    libavutil/crc.c
-    libavutil/des.c
-    libavutil/dict.c
-    libavutil/display.c
-    libavutil/dovi_meta.c
-    libavutil/downmix_info.c
-    libavutil/encryption_info.c
-    libavutil/error.c
-    libavutil/eval.c
-    libavutil/fifo.c
-    libavutil/file.c
-    libavutil/file_open.c
-    libavutil/film_grain_params.c
-    libavutil/fixed_dsp.c
-    libavutil/float_dsp.c
-    libavutil/frame.c
-    libavutil/hash.c
-    libavutil/hdr_dynamic_metadata.c
-    libavutil/hmac.c
-    libavutil/hwcontext.c
-    libavutil/hwcontext_vaapi.c
-    libavutil/hwcontext_vdpau.c
-    libavutil/imgutils.c
-    libavutil/integer.c
-    libavutil/intmath.c
-    libavutil/lfg.c
-    libavutil/lls.c
-    libavutil/log.c
-    libavutil/log2_tab.c
-    libavutil/lzo.c
-    libavutil/mastering_display_metadata.c
-    libavutil/mathematics.c
-    libavutil/md5.c
-    libavutil/mem.c
-    libavutil/murmur3.c
-    libavutil/opt.c
-    libavutil/parseutils.c
-    libavutil/pixdesc.c
-    libavutil/pixelutils.c
-    libavutil/random_seed.c
-    libavutil/rational.c
-    libavutil/rc4.c
-    libavutil/reverse.c
-    libavutil/ripemd.c
-    libavutil/samplefmt.c
-    libavutil/sha.c
-    libavutil/sha512.c
-    libavutil/slicethread.c
-    libavutil/spherical.c
-    libavutil/stereo3d.c
-    libavutil/tea.c
-    libavutil/threadmessage.c
-    libavutil/time.c
-    libavutil/timecode.c
-    libavutil/tree.c
-    libavutil/twofish.c
-    libavutil/tx.c
-    libavutil/tx_double.c
-    libavutil/tx_float.c
-    libavutil/tx_int32.c
-    libavutil/utils.c
-    libavutil/video_enc_params.c
-    libavutil/xga_font_data.c
-    libavutil/xtea.c
-    )
-#选择动态库还是静态图
 #SHARED
 #STATIC
 add_library(avresample SHARED ${avresample_srcs})
@@ -1949,25 +3205,24 @@ add_library(avdevice SHARED ${avdevice_srcs})
 target_compile_definitions(avdevice PRIVATE DBUILDING_avdevice)
 
 target_include_directories(avdevice PUBLIC ${SDL2_INCLUDE_DIRS} )
-#链接各个库的依赖，根据config.sh文件里面的内容书写
 target_link_libraries(avdevice
     -lm -lxcb -lxcb-shm -lxcb-shape -lxcb-xfixes -lasound -lSDL2 -lsndio -lXv -lX11 -lXext
-    avfilter swscale postproc avformat avcodec swresample avutil
+    avfilter swscale avformat avcodec swresample avutil
     )
 target_link_libraries(avutil
     -pthread -lva-drm -lva -lva-x11 -lva -lvdpau -lX11 -lm -lva -lXv -lX11 -lXext
     )
 target_link_libraries(avcodec
-    -pthread -lm -llzma -lcrystalhd -lz -lx264 -lva
+    -pthread -lm -llzma -lcrystalhd -lz -lva
     swresample avutil
     )
 target_link_libraries(avformat
     -lm -lbz2 -lz
-    avcodec swresample avutil
+    avutil
     )
 target_link_libraries(avfilter
     -pthread -lm -lva
-    swscale postproc avformat avcodec swresample avutil
+    swscale avformat avcodec swresample avutil
     )
 target_link_libraries(swscale
     -lm
@@ -1978,10 +3233,6 @@ target_link_libraries(postproc
     avutil
     )
 target_link_libraries(swresample
-    -lm
-    avutil
-    )
-target_link_libraries(avresample
     -lm
     avutil
     )
@@ -1998,21 +3249,5 @@ target_link_libraries(ffmpeg
     avutil
     avresample
     )
-list(APPEND ffplay_srcs
-    fftools/ffplay.c
-    fftools/cmdutils.c
-    )
 
-add_executable(ffplay ${ffplay_srcs})
-target_link_libraries(ffplay
-    postproc
-    avformat
-    avdevice
-    avfilter
-    avcodec
-    swresample
-    swscale
-    avutil
-    avresample
-    )
 
